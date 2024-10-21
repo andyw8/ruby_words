@@ -3,4 +3,6 @@
 
 require "ruby_words"
 
-puts RubyWords.all
+ruby_words = RubyWords::Ruby.new
+ruby_words.run
+puts ruby_words.all

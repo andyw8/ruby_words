@@ -1,6 +1,6 @@
 # Ruby Words
 
-This is a simple gem which emits a list of words used within the Ruby language. The intenion is to use it for building programming dictionaries for tools such as [cspell](https://cspell.org).
+This is a simple gem which emits a list of words used within the Ruby language. The intention is to use it for building programming dictionaries for tools such as [cspell](https://cspell.org).
 
 ## Installation
 
@@ -14,7 +14,7 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ## Usage
 
-TODO: Write usage instructions here
+Install the gem, then run `ruby_words`.
 
 ## Development
 
@@ -24,7 +24,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/ruby_words.
+Bug reports and pull requests are welcome on GitHub at https://github.com/andyw8/ruby_words.
 
 ## License
 
