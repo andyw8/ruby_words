@@ -80,21 +80,14 @@ class TestRubyWords < Minitest::Test
     assert_empty with_colons, "Found words with :: : #{with_colons.inspect}"
   end
 
-  def test_splits_camel_case
+  def test_preserves_camel_case
     ruby_words = RubyWords::Ruby.new
     ruby_words.run
     words = ruby_words.all
 
-    # Verify CamelCase class names are split
-    # EOFError -> EOF, Error
-    assert_includes words, "EOF"
-    assert_includes words, "Error"
-
-    # ArgumentError -> Argument, Error
-    assert_includes words, "Argument"
-
-    # FileTest -> File, Test
-    assert_includes words, "File"
-    assert_includes words, "Test"
+    # Verify CamelCase class names are preserved (not split)
+    assert_includes words, "EOFError"
+    assert_includes words, "ArgumentError"
+    assert_includes words, "FileTest"
   end
 end

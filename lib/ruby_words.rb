@@ -45,9 +45,9 @@ module RubyWords
     end
 
     def handle_class_or_module_declaration(declaration, pathname)
-      # Add the class/module name itself, split by :: and CamelCase
+      # Add the class/module name itself, split by ::
       declaration.name.to_s.split("::").each do |part|
-        @method_names.append(*split_camel_case(part))
+        @method_names.append(part)
       end
 
       declaration.members.each do |member|
@@ -61,15 +61,6 @@ module RubyWords
     def handle_method(member)
       name = member.name.name
       @method_names.append(*name.split("_"))
-    end
-
-    def split_camel_case(word)
-      # Split CamelCase, handling acronyms like EOF in EOFError
-      # Since Ruby class names always start uppercase, we can use a simpler pattern
-      # EOFError -> EOF, Error
-      # FileTest -> File, Test
-      # HTTPSConnection -> HTTPS, Connection
-      word.scan(/[A-Z]+(?=[A-Z][a-z]|\b)|[A-Z][a-z]+/)
     end
   end
 end

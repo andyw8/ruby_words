@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby_words (0.2.0)
+    ruby_words (0.3.0)
       rbs (~> 3.6)
 
 GEM
