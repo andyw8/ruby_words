@@ -22,7 +22,11 @@ module RubyWords
     end
 
     def all
-      @method_names.uniq.sort
+      @method_names
+        .map { |word| word.delete_suffix("?").delete_suffix("!").delete_suffix("=") }
+        .select { |word| word.match?(/[a-zA-Z0-9]/) && word.length > 1 }
+        .uniq
+        .sort
     end
 
     private
@@ -37,12 +41,15 @@ module RubyWords
       case declaration
       when RBS::AST::Declarations::Class, RBS::AST::Declarations::Module
         handle_class_or_module_declaration(declaration, pathname)
-      else
-        # Other kinds not yet handled
       end
     end
 
     def handle_class_or_module_declaration(declaration, pathname)
+      # Add the class/module name itself, split by :: and CamelCase
+      declaration.name.to_s.split("::").each do |part|
+        @method_names.append(*split_camel_case(part))
+      end
+
       declaration.members.each do |member|
         case member
         when RBS::AST::Members::MethodDefinition
@@ -54,6 +61,15 @@ module RubyWords
     def handle_method(member)
       name = member.name.name
       @method_names.append(*name.split("_"))
+    end
+
+    def split_camel_case(word)
+      # Split CamelCase, handling acronyms like EOF in EOFError
+      # Since Ruby class names always start uppercase, we can use a simpler pattern
+      # EOFError -> EOF, Error
+      # FileTest -> File, Test
+      # HTTPSConnection -> HTTPS, Connection
+      word.scan(/[A-Z]+(?=[A-Z][a-z]|\b)|[A-Z][a-z]+/)
     end
   end
 end
